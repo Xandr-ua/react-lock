@@ -1,51 +1,33 @@
-
-
+import Header from "./components/header/Header";
+import Basket from "./components/basket/Basket";
+import Card from "./components/card/Card";
 
 function App() {
   return (
     <div className="container">
-      <header>
-        <div className="headerLeft">
-          <img src="/img/logo.svg" alt="logo" />
-        </div>
-
-        <ul className="headerRight">
-          <li className="">
-            <img src="/img/like.svg" alt="like" />
-          </li>
-          <li className="">
-            <img src="/img/cart.svg" alt="cart" />
-            <span>89.90$</span>
-          </li>
-        </ul>
-      </header>
-
+      <Basket />
+      <Header />
       <section className="catalog">
-        <h1>Catalog</h1>
+        <div className="catalogInnerTitle">
+          <h1>Catalog</h1>
+          <div className="catalogSearch">
+            <img src="/img/search.svg" alt="search" />
+            <input type="text" placeholder="Search..." />
+          </div>
+        </div>
         <ul className="catalogList">
-          <li className="card">
-            <div className="cardInfo">
-              <span className="cardInfoText">Out of stock</span>
-              <span className="cardInfoSale">sale</span>
-            </div>
-            <img src="/img/locks/lock-1.jpg" alt="lock" />
-            <p>Variable Golden Soft lock for the hotel</p>
-            <div className="cardInner">
-              <div className="cardInnerPrice">
-                <span>89.90$</span>
-                <span>100.00$</span>
-              </div>
-              <button>Add to cart</button>
-            </div>
-          </li>
+          <Card />
 
           <li className="card">
             <div className="cardInfo">
               <span className="cardInfoText">Out of stock</span>
-              <span className="cardInfoSale">sale</span>
+              <div className="cardInfoInner">
+                <span className="cardInfoSale">sale</span>
+                <img src="/img/cart-like.svg" alt="cart-like" />
+              </div>
             </div>
             <img src="/img/locks/lock-2.jpg" alt="lock" />
-            <p>Variable Golden Soft lock for the hotel</p>
+            <p>Golden Soft GS-200Z-5 electronic door lock for office</p>
             <div className="cardInner">
               <div className="cardInnerPrice">
                 <span>89.90$</span>
@@ -58,10 +40,13 @@ function App() {
           <li className="card">
             <div className="cardInfo">
               <span className="cardInfoText">Out of stock</span>
-              <span className="cardInfoSale">sale</span>
+              <div className="cardInfoInner">
+                <span className="cardInfoSale">sale</span>
+                <img src="/img/cart-like.svg" alt="cart-like" />
+              </div>
             </div>
             <img src="/img/locks/lock-3.jpg" alt="lock" />
-            <p>Variable Golden Soft lock for the hotel</p>
+            <p>Golden Soft GS-65T office door lock</p>
             <div className="cardInner">
               <div className="cardInnerPrice">
                 <span>89.90$</span>
@@ -74,10 +59,13 @@ function App() {
           <li className="card">
             <div className="cardInfo">
               <span className="cardInfoText">Out of stock</span>
-              <span className="cardInfoSale">sale</span>
+              <div className="cardInfoInner">
+                <span className="cardInfoSale">sale</span>
+                <img src="/img/cart-like.svg" alt="cart-like" />
+              </div>
             </div>
             <img src="/img/locks/lock-4.jpg" alt="lock" />
-            <p>Variable Golden Soft lock for the hotel</p>
+            <p>Golden Soft GS-HC-S6 Variable Electronic Lock for Hote</p>
             <div className="cardInner">
               <div className="cardInnerPrice">
                 <span>89.90$</span>
