@@ -1,6 +1,16 @@
+import React from "react";
+import "./Card.scss";
 
+function Card(props) {
 
-function Card() {
+  const [isAdded, setIsAdded] = React.useState(false);
+
+  const onAdded = () => {
+    setIsAdded(!isAdded);
+  };
+
+  
+
   return (
     <li className="card">
       <div className="cardInfo">
@@ -10,14 +20,23 @@ function Card() {
           <img src="/img/cart-like.svg" alt="cart-like" />
         </div>
       </div>
-      <img src="/img/locks/lock-1.jpg" alt="lock" />
-      <p>Golden Soft GS-JYL-S2019D Variable Electronic Lock for Hotel</p>
+      <img src={props.imagesUrl} alt="lock" />
+      <p>{props.title}</p>
       <div className="cardInner">
         <div className="cardInnerPrice">
-          <span>89.90$</span>
+          <span>{props.price}$</span>
           <span>100.00$</span>
         </div>
-        <button>Add to cart</button>
+        <button
+          style={
+            isAdded
+              ? { backgroundColor: "#37bf2d" }
+              : { backgroundColor: "#4295E4" }
+          }
+          onClick={onAdded}
+        >
+          Add to cart
+        </button>
       </div>
     </li>
   );

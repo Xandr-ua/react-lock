@@ -1,13 +1,18 @@
+import "./Basket.scss";
 
-
-function Basket() {
+function Basket(props) {
   return (
     <div className="basketInner">
       <div className="basket">
         <div className="basketTop">
           <h2>
             Basket
-            <img className="remove" src="/img/remove.svg" alt="close" />
+            <img
+              onClick={props.onClose}
+              className="remove"
+              src="/img/remove.svg"
+              alt="close"
+            />
           </h2>
           <ul className="basketList">
             <li className="basketItem">

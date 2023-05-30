@@ -1,12 +1,25 @@
+import React from "react";
 import Header from "./components/header/Header";
 import Basket from "./components/basket/Basket";
 import Card from "./components/card/Card";
 
+
 function App() {
+  const [items, setItems] = React.useState([]);
+  const [cartOpen, setCartOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch("https://6474fe937de100807b1c0b84.mockapi.io/items").then((res) => {
+        return res.json();
+      }).then((json) => {
+        setItems(json);
+      });
+  }, []);
+
   return (
     <div className="container">
-      <Basket />
-      <Header />
+      {cartOpen && <Basket onClose={() => setCartOpen(false)} />}
+      <Header onClickCart={() => setCartOpen(true)} />
       <section className="catalog">
         <div className="catalogInnerTitle">
           <h1>Catalog</h1>
@@ -16,64 +29,13 @@ function App() {
           </div>
         </div>
         <ul className="catalogList">
-          <Card />
-
-          <li className="card">
-            <div className="cardInfo">
-              <span className="cardInfoText">Out of stock</span>
-              <div className="cardInfoInner">
-                <span className="cardInfoSale">sale</span>
-                <img src="/img/cart-like.svg" alt="cart-like" />
-              </div>
-            </div>
-            <img src="/img/locks/lock-2.jpg" alt="lock" />
-            <p>Golden Soft GS-200Z-5 electronic door lock for office</p>
-            <div className="cardInner">
-              <div className="cardInnerPrice">
-                <span>89.90$</span>
-                <span>100.00$</span>
-              </div>
-              <button>Add to cart</button>
-            </div>
-          </li>
-
-          <li className="card">
-            <div className="cardInfo">
-              <span className="cardInfoText">Out of stock</span>
-              <div className="cardInfoInner">
-                <span className="cardInfoSale">sale</span>
-                <img src="/img/cart-like.svg" alt="cart-like" />
-              </div>
-            </div>
-            <img src="/img/locks/lock-3.jpg" alt="lock" />
-            <p>Golden Soft GS-65T office door lock</p>
-            <div className="cardInner">
-              <div className="cardInnerPrice">
-                <span>89.90$</span>
-                <span>100.00$</span>
-              </div>
-              <button>Add to cart</button>
-            </div>
-          </li>
-
-          <li className="card">
-            <div className="cardInfo">
-              <span className="cardInfoText">Out of stock</span>
-              <div className="cardInfoInner">
-                <span className="cardInfoSale">sale</span>
-                <img src="/img/cart-like.svg" alt="cart-like" />
-              </div>
-            </div>
-            <img src="/img/locks/lock-4.jpg" alt="lock" />
-            <p>Golden Soft GS-HC-S6 Variable Electronic Lock for Hote</p>
-            <div className="cardInner">
-              <div className="cardInnerPrice">
-                <span>89.90$</span>
-                <span>100.00$</span>
-              </div>
-              <button>Add to cart</button>
-            </div>
-          </li>
+          {items.map((obj) => (
+            <Card
+              title={obj.title}
+              price={obj.price}
+              imagesUrl={obj.imagesUrl}
+            />
+          ))}
         </ul>
       </section>
     </div>
