@@ -6,6 +6,7 @@ import Card from "./components/card/Card";
 
 function App() {
   const [items, setItems] = React.useState([]);
+  const [cartItems, setCartItems] = React.useState([]);
   const [cartOpen, setCartOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,9 +17,15 @@ function App() {
       });
   }, []);
 
+  const onAddToCart = (obj) => {
+    setCartItems(prev => [...prev, obj]);
+  };
+
   return (
     <div className="container">
-      {cartOpen && <Basket onClose={() => setCartOpen(false)} />}
+      {cartOpen && (
+        <Basket items={cartItems} onClose={() => setCartOpen(false)} />
+      )}
       <Header onClickCart={() => setCartOpen(true)} />
       <section className="catalog">
         <div className="catalogInnerTitle">
@@ -29,11 +36,13 @@ function App() {
           </div>
         </div>
         <ul className="catalogList">
-          {items.map((obj) => (
+          {items.map((item) => (
             <Card
-              title={obj.title}
-              price={obj.price}
-              imagesUrl={obj.imagesUrl}
+              title={item.title}
+              price={item.price}
+              imagesUrl={item.imagesUrl}
+              onClickHeart={() => console.log("Heart")}
+              onAddCart={(obj) => onAddToCart(obj)}
             />
           ))}
         </ul>
