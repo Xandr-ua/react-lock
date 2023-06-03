@@ -7,6 +7,7 @@ import Card from "./components/card/Card";
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState('');
   const [cartOpen, setCartOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -21,6 +22,12 @@ function App() {
     setCartItems(prev => [...prev, obj]);
   };
 
+
+  const onChangeSearchInput = (event) => {
+    setSearchValue(event.target.value);
+  }
+
+
   return (
     <div className="container">
       {cartOpen && (
@@ -29,22 +36,42 @@ function App() {
       <Header onClickCart={() => setCartOpen(true)} />
       <section className="catalog">
         <div className="catalogInnerTitle">
-          <h1>Catalog</h1>
+          <h1>
+            {searchValue ? `Пошук по запиту: "${searchValue}"` : `Catalog`}
+          </h1>
           <div className="catalogSearch">
             <img src="/img/search.svg" alt="search" />
-            <input type="text" placeholder="Search..." />
+            <input
+              onChange={onChangeSearchInput}
+              value={searchValue}
+              type="text"
+              placeholder="Search..."
+            />
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue("")}
+                className="catalogClose"
+                src="/img/close.svg"
+                alt="close"
+              />
+            )}
           </div>
         </div>
         <ul className="catalogList">
-          {items.map((item) => (
-            <Card
-              title={item.title}
-              price={item.price}
-              imagesUrl={item.imagesUrl}
-              onClickHeart={() => console.log("Heart")}
-              onAddCart={(obj) => onAddToCart(obj)}
-            />
-          ))}
+          {items
+            .filter((item) =>
+              item.title.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Card
+                key={item.imagesUrl}
+                title={item.title}
+                price={item.price}
+                imagesUrl={item.imagesUrl}
+                onClickHeart={() => console.log("Heart")}
+                onAddCart={(obj) => onAddToCart(obj)}
+              />
+            ))}
         </ul>
       </section>
     </div>
