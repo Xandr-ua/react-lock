@@ -3,11 +3,17 @@ import "./Card.scss";
 
 function Card({ imagesUrl, title, price, onClickHeart, onAddCart }) {
   const [isAdded, setIsAdded] = React.useState(false);
+  const [isTabs, setIsTabs] = React.useState(true);
 
   const onAdded = () => {
     onAddCart({ imagesUrl, title, price });
     setIsAdded(!isAdded);
   };
+
+  const onClickTabs = () => {
+    onClickHeart({ imagesUrl, title, price });
+    setIsTabs(!isTabs);
+  }
 
   return (
     <li className="card">
@@ -16,9 +22,9 @@ function Card({ imagesUrl, title, price, onClickHeart, onAddCart }) {
         <div className="cardInfoInner">
           <span className="cardInfoSale">sale</span>
           <img
-            src="/img/cart-like.svg"
+            src={isTabs ? "/img/cart-like.svg" : "/img/like-active.svg"}
             alt="cart-like"
-            onClick={onClickHeart}
+            onClick={onClickTabs}
           />
         </div>
       </div>

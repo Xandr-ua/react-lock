@@ -36,6 +36,13 @@
   }
 }
 
+.basketListInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 120px);
+}
+
 .basketList {
   overflow: auto;
   max-height: 600px;

@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 function Header(props) {
   return (
@@ -8,8 +8,10 @@ function Header(props) {
       </div>
 
       <ul className="headerRight">
-        <li className="" >
-          <img src="/img/like.svg" alt="like" />
+        <li className="">
+          <Link to="/tabs" exact>
+            <img src="/img/like.svg" alt="like" />
+          </Link>
         </li>
         <li className="" onClick={props.onClickCart}>
           <img src="/img/cart.svg" alt="cart" />

@@ -1,25 +1,49 @@
 import React from "react";
+import { Route } from "react-router-dom";
+import axios from "axios";
 import Header from "./components/header/Header";
 import Basket from "./components/basket/Basket";
-import Card from "./components/card/Card";
+import Home from "./pages/Home";
+
 
 
 function App() {
   const [items, setItems] = React.useState([]);
   const [cartItems, setCartItems] = React.useState([]);
+  const [tabs, setTabs] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState('');
   const [cartOpen, setCartOpen] = React.useState(false);
 
   React.useEffect(() => {
-    fetch("https://6474fe937de100807b1c0b84.mockapi.io/items").then((res) => {
-        return res.json();
-      }).then((json) => {
-        setItems(json);
+
+      axios
+      .get("https://6474fe937de100807b1c0b84.mockapi.io/items")
+      .then(res => {
+        setItems(res.data);
       });
+
+      axios
+        .get("https://6474fe937de100807b1c0b84.mockapi.io/cart")
+        .then((res) => {
+          setCartItems(res.data);
+        });
+
+
   }, []);
 
   const onAddToCart = (obj) => {
+    axios.post("https://6474fe937de100807b1c0b84.mockapi.io/cart", obj);
     setCartItems(prev => [...prev, obj]);
+  };
+
+  const onRemoveItem = (id) => {
+    axios.delete(`https://6474fe937de100807b1c0b84.mockapi.io/cart/${id}`);
+    setCartItems((prev) => prev.filter(item => item.id !== id));
+  }
+
+  const onAddToTab = (obj) => {
+    axios.post("https://6474fe937de100807b1c0b84.mockapi.io/tabs", obj);
+    setTabs((prev) => [...prev, obj]);
   };
 
 
@@ -31,10 +55,20 @@ function App() {
   return (
     <div className="container">
       {cartOpen && (
-        <Basket items={cartItems} onClose={() => setCartOpen(false)} />
+        <Basket
+          items={cartItems}
+          onClose={() => setCartOpen(false)}
+          onRemove={onRemoveItem}
+        />
       )}
       <Header onClickCart={() => setCartOpen(true)} />
-      <section className="catalog">
+
+      <Route path="/">
+        <Home />
+      </Route>
+
+
+      {/* <section className="catalog">
         <div className="catalogInnerTitle">
           <h1>
             {searchValue ? `Пошук по запиту: "${searchValue}"` : `Catalog`}
@@ -68,12 +102,12 @@ function App() {
                 title={item.title}
                 price={item.price}
                 imagesUrl={item.imagesUrl}
-                onClickHeart={() => console.log("Heart")}
+                onClickHeart={(obj) => onAddToTab(obj)}
                 onAddCart={(obj) => onAddToCart(obj)}
               />
             ))}
         </ul>
-      </section>
+      </section> */}
     </div>
   );
 }
